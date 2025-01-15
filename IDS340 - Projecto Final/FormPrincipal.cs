@@ -29,16 +29,9 @@ namespace IDS340___Projecto_Final
 
         private void CargarProductos()
         {
-            try
-            {
-                string query = "SELECT * FROM Productos";
-                dataGridViewProductos.DataSource = database.ExecuteQuery(query);
-                dataGridViewConsultas.DataSource = database.ExecuteQuery(query);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al cargar productos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            string query = "SELECT * FROM Productos";
+            dataGridViewProductos.DataSource = database.ExecuteQuery(query);
+            dataGridViewConsultas.DataSource = database.ExecuteQuery(query);
         }
 
 
@@ -230,7 +223,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Categoria agregada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarCategorias(); // Actualizar la tabla después de agregar
+                CargarCategorias();
             }
             catch (Exception ex)
             {
@@ -249,7 +242,7 @@ namespace IDS340___Projecto_Final
             {
                 new SQLiteParameter("@Nombre", txtNombreCategoria.Text),
                 new SQLiteParameter("@Descripcion", txtDescripcionCategoria.Text),
-                new SQLiteParameter("@Id", GetSelectedCategoryId()) // Método para obtener el ID de la categoría seleccionada
+                new SQLiteParameter("@Id", GetSelectedCategoryId())
             };
 
             database.ExecuteNonQuery(query, parameters);
@@ -319,7 +312,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Proveedor agregada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProveedores(); // Actualizar la tabla después de agregar
+                CargarProveedores();
             }
             catch (Exception ex)
             {
