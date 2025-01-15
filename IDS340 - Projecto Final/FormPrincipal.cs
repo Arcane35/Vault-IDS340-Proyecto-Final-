@@ -5,29 +5,29 @@ using System.Windows.Forms;
 
 namespace IDS340___Projecto_Final
 {
-    public partial class FormMenu : Form
+    public partial class FormPrincipal : Form
     {
 
         private Database database;
 
-        public FormMenu()
+        public FormPrincipal()
         {
             InitializeComponent();
 
             database = new Database();
-            LoadData();
+            CargarData();
         }
 
         ///  METODOS PARA CARGAR Y REFRESCAR PRODUCTOS/CATEGORIAS/PROVEEDORES EN LOS CONTROLES "datGridView" & "ComboBox"
 
-        private void LoadData()
+        private void CargarData()
         {
-            LoadProductos();
-            LoadCategorias();
-            LoadProveedores();
+            CargarProductos();
+            CargarCategorias();
+            CargarProveedores();
         }
 
-        private void LoadProductos()
+        private void CargarProductos()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace IDS340___Projecto_Final
         }
 
 
-        private void LoadCategorias()
+        private void CargarCategorias()
         {
             string query = "SELECT * FROM Categorias";
             dataGridViewCategoria.DataSource = database.ExecuteQuery(query);
@@ -54,7 +54,7 @@ namespace IDS340___Projecto_Final
             cmbCategoriaConsulta.ValueMember = "Id";
         }
 
-        private void LoadProveedores()
+        private void CargarProveedores()
         {
             string query = "SELECT * FROM Proveedores";
             dataGridViewProveedor.DataSource = database.ExecuteQuery(query);
@@ -86,7 +86,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Producto agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadProductos(); // Actualizar la tabla después de agregar
+                CargarProductos();
             }
             catch (Exception ex)
             {
@@ -103,7 +103,7 @@ namespace IDS340___Projecto_Final
                 return;
             }
 
-            // Validación de campos
+            // Validacion de campos
             if (string.IsNullOrWhiteSpace(txtNombreProducto.Text) ||
                 string.IsNullOrWhiteSpace(txtCodigoProducto.Text) ||
                 cmbCategoriaProducto.SelectedValue == null ||
@@ -132,14 +132,14 @@ namespace IDS340___Projecto_Final
                 new SQLiteParameter("@Precio", Convert.ToDouble(txtPrecioProducto.Text)),
                 new SQLiteParameter("@Existencia", Convert.ToInt32(txtExistenciaProducto.Text)),
                 new SQLiteParameter("@Proveedor", cmbProveedorProducto.SelectedValue),
-                new SQLiteParameter("@Id", GetSelectedProductId()) // Obtener el ID del producto seleccionado
+                new SQLiteParameter("@Id", GetSelectedProductId()) 
             };
 
             try
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Producto actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadProductos(); // Actualiza la tabla después de la edición
+                CargarProductos();
             }
             catch (Exception ex)
             {
@@ -162,14 +162,14 @@ namespace IDS340___Projecto_Final
                 string query = "DELETE FROM Productos WHERE Id = @Id";
                 var parameters = new SQLiteParameter[]
                 {
-            new SQLiteParameter("@Id", GetSelectedProductId())
+                    new SQLiteParameter("@Id", GetSelectedProductId())
                 };
 
                 try
                 {
                     database.ExecuteNonQuery(query, parameters);
                     MessageBox.Show("Producto eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadProductos(); // Actualiza la tabla después de la eliminación
+                    CargarProductos(); 
                 }
                 catch (Exception ex)
                 {
@@ -177,7 +177,6 @@ namespace IDS340___Projecto_Final
                 }
             }
         }
-
         private int GetSelectedProductId()
         {
             if (dataGridViewProductos.SelectedRows.Count > 0)
@@ -231,7 +230,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Categoria agregada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadCategorias(); // Actualizar la tabla después de agregar
+                CargarCategorias(); // Actualizar la tabla después de agregar
             }
             catch (Exception ex)
             {
@@ -254,7 +253,7 @@ namespace IDS340___Projecto_Final
             };
 
             database.ExecuteNonQuery(query, parameters);
-            LoadCategorias();
+            CargarCategorias();
         }
 
         private void btnEliminarCategoria_Click(object sender, EventArgs e)
@@ -267,7 +266,7 @@ namespace IDS340___Projecto_Final
             };
 
             database.ExecuteNonQuery(query, parameters);
-            LoadCategorias();
+            CargarCategorias();
         }
 
         private int GetSelectedCategoryId()
@@ -282,16 +281,34 @@ namespace IDS340___Projecto_Final
             }
         }
 
+        // Método para manejar el cambio de selección en el DataGridView
+        private void dataGridViewCategoria_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewCategoria.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    DataGridViewRow selectedRow = dataGridViewCategoria.SelectedRows[0];
+
+                    txtNombreCategoria.Text = selectedRow.Cells["Nombre"].Value?.ToString();
+                    txtDescripcionCategoria.Text = selectedRow.Cells["Descripcion"].Value?.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar datos de la fila seleccionada: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         /// PROVEEDORES
 
         private void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
-            string query = "INSERT INTO Proveedores (CodigoEmpresa, NombreEmpresa, Contacto, Direccion, Telefono) " +
-                           "VALUES (@CodigoEmpresa, @NombreEmpresa, @Contacto, @Direccion, @Telefono)";
+            string query = "INSERT INTO Proveedores (NombreEmpresa, Contacto, Direccion, Telefono) " +
+                           "VALUES (@NombreEmpresa, @Contacto, @Direccion, @Telefono)";
 
             var parameters = new SQLiteParameter[]
             {
-                new SQLiteParameter("@CodigoEmpresa", txtCodigoProveedor.Text),
                 new SQLiteParameter("@NombreEmpresa", txtNombreProveedor.Text),
                 new SQLiteParameter("@Contacto", txtContactoProveedor.Text),
                 new SQLiteParameter("@Direccion", txtDireccionProveedor.Text),
@@ -302,7 +319,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Proveedor agregada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadProveedores(); // Actualizar la tabla después de agregar
+                CargarProveedores(); // Actualizar la tabla después de agregar
             }
             catch (Exception ex)
             {
@@ -325,11 +342,11 @@ namespace IDS340___Projecto_Final
                 new SQLiteParameter("@Contacto", txtContactoProveedor.Text),
                 new SQLiteParameter("@Direccion", txtDireccionProveedor.Text),
                 new SQLiteParameter("@Telefono", txtTelefonoProveedor.Text),
-                new SQLiteParameter("@Id", GetSelectedSupplierId()) // Método para obtener el ID del proveedor seleccionado
+                new SQLiteParameter("@Id", GetSelectedSupplierId())
             };
 
             database.ExecuteNonQuery(query, parameters);
-            LoadProveedores();
+            CargarProveedores();
         }
 
         private void btnEliminarProveedor_Click(object sender, EventArgs e)
@@ -342,7 +359,7 @@ namespace IDS340___Projecto_Final
             };
 
             database.ExecuteNonQuery(query, parameters);
-            LoadProveedores();
+            CargarProveedores();
         }
 
         private int GetSelectedSupplierId()
@@ -354,6 +371,28 @@ namespace IDS340___Projecto_Final
             else
             {
                 throw new Exception("Por favor, selecciona un proveedor.");
+            }
+        }
+
+        // Método para manejar el cambio de selección en el DataGridView
+        private void dataGridViewProveedor_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewProveedor.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    DataGridViewRow selectedRow = dataGridViewProveedor.SelectedRows[0];
+
+                    txtNombreProveedor.Text = selectedRow.Cells["NombreEmpresa"].Value?.ToString();
+                    txtContactoProveedor.Text = selectedRow.Cells["Contacto"].Value?.ToString();
+                    txtDireccionProveedor.Text = selectedRow.Cells["Direccion"].Value?.ToString();
+                    txtTelefonoProveedor.Text = selectedRow.Cells["Telefono"].Value?.ToString();
+                    new SQLiteParameter("@Id", GetSelectedSupplierId());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar datos de la fila seleccionada: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

@@ -8,7 +8,7 @@ namespace IDS340___Projecto_Final
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new FormMenu());
+            Application.Run(new FormPrincipal());
         }
     }
 }

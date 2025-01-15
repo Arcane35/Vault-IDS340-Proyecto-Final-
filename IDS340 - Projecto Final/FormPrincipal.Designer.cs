@@ -1,6 +1,6 @@
 ﻿namespace IDS340___Projecto_Final
 {
-    partial class FormMenu
+    partial class FormPrincipal
     {
         /// <summary>
         ///  Required designer variable.
@@ -34,7 +34,6 @@
             txtDireccionProveedor = new TextBox();
             txtContactoProveedor = new TextBox();
             txtNombreProveedor = new TextBox();
-            txtCodigoProveedor = new TextBox();
             label10 = new Label();
             btnEliminarProveedor = new Button();
             btnEditarProveedor = new Button();
@@ -42,7 +41,6 @@
             dataGridViewProveedor = new DataGridView();
             label2 = new Label();
             label3 = new Label();
-            label7 = new Label();
             label9 = new Label();
             tabPageCategorias = new TabPage();
             btnEliminarCategoria = new Button();
@@ -108,7 +106,6 @@
             tabPageProveedores.Controls.Add(txtDireccionProveedor);
             tabPageProveedores.Controls.Add(txtContactoProveedor);
             tabPageProveedores.Controls.Add(txtNombreProveedor);
-            tabPageProveedores.Controls.Add(txtCodigoProveedor);
             tabPageProveedores.Controls.Add(label10);
             tabPageProveedores.Controls.Add(btnEliminarProveedor);
             tabPageProveedores.Controls.Add(btnEditarProveedor);
@@ -116,7 +113,6 @@
             tabPageProveedores.Controls.Add(dataGridViewProveedor);
             tabPageProveedores.Controls.Add(label2);
             tabPageProveedores.Controls.Add(label3);
-            tabPageProveedores.Controls.Add(label7);
             tabPageProveedores.Controls.Add(label9);
             tabPageProveedores.Location = new Point(4, 34);
             tabPageProveedores.Name = "tabPageProveedores";
@@ -128,7 +124,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(30, 445);
+            label11.Location = new Point(28, 370);
             label11.Name = "label11";
             label11.Size = new Size(79, 25);
             label11.TabIndex = 37;
@@ -137,43 +133,36 @@
             // 
             // txtTelefonoProveedor
             // 
-            txtTelefonoProveedor.Location = new Point(24, 470);
+            txtTelefonoProveedor.Location = new Point(22, 395);
             txtTelefonoProveedor.Name = "txtTelefonoProveedor";
             txtTelefonoProveedor.Size = new Size(269, 31);
             txtTelefonoProveedor.TabIndex = 36;
             // 
             // txtDireccionProveedor
             // 
-            txtDireccionProveedor.Location = new Point(24, 381);
+            txtDireccionProveedor.Location = new Point(22, 306);
             txtDireccionProveedor.Name = "txtDireccionProveedor";
             txtDireccionProveedor.Size = new Size(269, 31);
             txtDireccionProveedor.TabIndex = 34;
             // 
             // txtContactoProveedor
             // 
-            txtContactoProveedor.Location = new Point(24, 296);
+            txtContactoProveedor.Location = new Point(22, 221);
             txtContactoProveedor.Name = "txtContactoProveedor";
             txtContactoProveedor.Size = new Size(269, 31);
             txtContactoProveedor.TabIndex = 24;
             // 
             // txtNombreProveedor
             // 
-            txtNombreProveedor.Location = new Point(24, 211);
+            txtNombreProveedor.Location = new Point(22, 136);
             txtNombreProveedor.Name = "txtNombreProveedor";
             txtNombreProveedor.Size = new Size(269, 31);
             txtNombreProveedor.TabIndex = 22;
             // 
-            // txtCodigoProveedor
-            // 
-            txtCodigoProveedor.Location = new Point(24, 134);
-            txtCodigoProveedor.Name = "txtCodigoProveedor";
-            txtCodigoProveedor.Size = new Size(269, 31);
-            txtCodigoProveedor.TabIndex = 19;
-            // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(30, 356);
+            label10.Location = new Point(28, 281);
             label10.Name = "label10";
             label10.Size = new Size(85, 25);
             label10.TabIndex = 35;
@@ -189,6 +178,7 @@
             btnEliminarProveedor.TabIndex = 33;
             btnEliminarProveedor.Text = "Eliminar";
             btnEliminarProveedor.UseVisualStyleBackColor = false;
+            btnEliminarProveedor.Click += btnEliminarProveedor_Click;
             // 
             // btnEditarProveedor
             // 
@@ -199,6 +189,7 @@
             btnEditarProveedor.TabIndex = 32;
             btnEditarProveedor.Text = "Editar";
             btnEditarProveedor.UseVisualStyleBackColor = false;
+            btnEditarProveedor.Click += btnEditarProveedor_Click;
             // 
             // btnAgregarProveedor
             // 
@@ -213,17 +204,19 @@
             // 
             // dataGridViewProveedor
             // 
+            dataGridViewProveedor.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridViewProveedor.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewProveedor.Location = new Point(339, 111);
             dataGridViewProveedor.Name = "dataGridViewProveedor";
             dataGridViewProveedor.RowHeadersWidth = 62;
             dataGridViewProveedor.Size = new Size(1091, 519);
             dataGridViewProveedor.TabIndex = 30;
+            dataGridViewProveedor.SelectionChanged += dataGridViewProveedor_SelectionChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(30, 271);
+            label2.Location = new Point(28, 196);
             label2.Name = "label2";
             label2.Size = new Size(84, 25);
             label2.TabIndex = 25;
@@ -233,20 +226,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(30, 186);
+            label3.Location = new Point(28, 111);
             label3.Name = "label3";
             label3.Size = new Size(194, 25);
             label3.TabIndex = 23;
             label3.Text = "Nombre de la Empresa";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(30, 109);
-            label7.Name = "label7";
-            label7.Size = new Size(183, 25);
-            label7.TabIndex = 21;
-            label7.Text = "Código de Proveedor";
             // 
             // label9
             // 
@@ -287,7 +271,7 @@
             btnEliminarCategoria.TabIndex = 33;
             btnEliminarCategoria.Text = "Eliminar";
             btnEliminarCategoria.UseVisualStyleBackColor = false;
-            btnEliminarCategoria.Click += btnEliminarProveedor_Click;
+            btnEliminarCategoria.Click += btnEliminarCategoria_Click;
             // 
             // btnEditarCategoria
             // 
@@ -298,6 +282,7 @@
             btnEditarCategoria.TabIndex = 32;
             btnEditarCategoria.Text = "Editar";
             btnEditarCategoria.UseVisualStyleBackColor = false;
+            btnEditarCategoria.Click += btnEditarCategoria_Click;
             // 
             // btnAgregarCategoria
             // 
@@ -312,12 +297,14 @@
             // 
             // dataGridViewCategoria
             // 
+            dataGridViewCategoria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridViewCategoria.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCategoria.Location = new Point(339, 111);
             dataGridViewCategoria.Name = "dataGridViewCategoria";
             dataGridViewCategoria.RowHeadersWidth = 62;
             dataGridViewCategoria.Size = new Size(1091, 519);
             dataGridViewCategoria.TabIndex = 30;
+            dataGridViewCategoria.SelectionChanged += dataGridViewCategoria_SelectionChanged;
             // 
             // label4
             // 
@@ -347,9 +334,9 @@
             label5.AutoSize = true;
             label5.Location = new Point(24, 111);
             label5.Name = "label5";
-            label5.Size = new Size(88, 25);
+            label5.Size = new Size(202, 25);
             label5.TabIndex = 23;
-            label5.Text = "Categoría";
+            label5.Text = "Nombre de la Categoría";
             // 
             // label8
             // 
@@ -392,7 +379,7 @@
             // lblProveedor
             // 
             lblProveedor.AutoSize = true;
-            lblProveedor.Location = new Point(24, 563);
+            lblProveedor.Location = new Point(24, 564);
             lblProveedor.Name = "lblProveedor";
             lblProveedor.Size = new Size(94, 25);
             lblProveedor.TabIndex = 20;
@@ -410,7 +397,7 @@
             // cmbProveedorProducto
             // 
             cmbProveedorProducto.FormattingEnabled = true;
-            cmbProveedorProducto.Location = new Point(24, 591);
+            cmbProveedorProducto.Location = new Point(24, 592);
             cmbProveedorProducto.Name = "cmbProveedorProducto";
             cmbProveedorProducto.Size = new Size(272, 33);
             cmbProveedorProducto.TabIndex = 18;
@@ -458,6 +445,7 @@
             // 
             // dataGridViewProductos
             // 
+            dataGridViewProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridViewProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewProductos.Location = new Point(336, 105);
             dataGridViewProductos.Name = "dataGridViewProductos";
@@ -557,7 +545,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Century Gothic", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(559, 324);
+            label6.Location = new Point(562, 398);
             label6.Name = "label6";
             label6.Size = new Size(345, 28);
             label6.TabIndex = 2;
@@ -568,7 +556,7 @@
             lblLogo.AutoSize = true;
             lblLogo.Font = new Font("Century Gothic", 72F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblLogo.ForeColor = Color.DarkSlateBlue;
-            lblLogo.Location = new Point(509, 151);
+            lblLogo.Location = new Point(512, 225);
             lblLogo.Name = "lblLogo";
             lblLogo.Size = new Size(437, 173);
             lblLogo.TabIndex = 1;
@@ -661,6 +649,7 @@
             // 
             // dataGridViewConsultas
             // 
+            dataGridViewConsultas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridViewConsultas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewConsultas.Location = new Point(328, 169);
             dataGridViewConsultas.Name = "dataGridViewConsultas";
@@ -724,6 +713,8 @@
             BackColor = Color.Lavender;
             ClientSize = new Size(1481, 786);
             Controls.Add(tabControl1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "FormMenu";
             Text = "Vault";
             tabPageProveedores.ResumeLayout(false);
@@ -752,7 +743,6 @@
         private TextBox txtDireccionProveedor;
         private TextBox txtContactoProveedor;
         private TextBox txtNombreProveedor;
-        private TextBox txtCodigoProveedor;
         private Label label10;
         private Button btnEliminarProveedor;
         private Button btnEditarProveedor;
@@ -760,7 +750,6 @@
         private DataGridView dataGridViewProveedor;
         private Label label2;
         private Label label3;
-        private Label label7;
         private Label label9;
         private TabPage tabPageCategorias;
         private Button btnEliminarCategoria;

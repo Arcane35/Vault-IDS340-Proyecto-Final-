@@ -8,15 +8,7 @@ public class Database
 
     public Database()
     {
-        try
-        {
-            CreateDatabase();
-            MessageBox.Show("Conexión a la base de datos exitosa.", "Éxito");
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error en la conexión a la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+       CreateDatabase();
     }
 
     private void CreateDatabase()
@@ -43,7 +35,6 @@ public class Database
                 );
                 CREATE TABLE IF NOT EXISTS Proveedores (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CodigoEmpresa TEXT NOT NULL UNIQUE,
                     NombreEmpresa TEXT NOT NULL UNIQUE,
                     Contacto TEXT,
                     Direccion TEXT,
