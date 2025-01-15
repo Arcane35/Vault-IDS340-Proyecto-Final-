@@ -453,7 +453,7 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para generar reporte de productos con stock bajo
+        // Método para generar reporte de productos con stock bajo en .csv
         private void btnGenerarReporte_Click(object sender, EventArgs e)
         {
             try
@@ -466,7 +466,6 @@ namespace IDS340___Projecto_Final
                     
                     dataGridViewConsultas.DataSource = productosConStockBajo;
 
-                    // Generar archivo de reporte en .csv
                     string reportePath = "ReporteStockBajo.csv";
                     using (StreamWriter writer = new StreamWriter(reportePath))
                     {
