@@ -414,7 +414,19 @@ namespace IDS340___Projecto_Final
                 }
 
                 // Ejecutar consulta y mostrar resultados
-                dataGridViewConsultas.DataSource = database.ExecuteQuery(query, parameters.ToArray());
+                var resultados = database.ExecuteQuery(query, parameters.ToArray());
+
+                if (resultados.Rows.Count > 0)
+                {
+                    dataGridViewConsultas.DataSource = resultados;
+                }
+                else
+                {
+                    MessageBox.Show("No hay resultados para la combinación seleccionada de categoría y proveedor.",
+                                    "Sin Resultados",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {

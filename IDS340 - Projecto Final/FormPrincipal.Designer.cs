@@ -70,7 +70,7 @@
             lblCodDeProducto = new Label();
             lblNombre = new Label();
             label1 = new Label();
-            tabPageMenu = new TabPage();
+            tabPageInicio = new TabPage();
             label6 = new Label();
             lblLogo = new Label();
             tabControl1 = new TabControl();
@@ -92,7 +92,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewCategoria).BeginInit();
             tabPageProductos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).BeginInit();
-            tabPageMenu.SuspendLayout();
+            tabPageInicio.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPageConsultasReportes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewConsultas).BeginInit();
@@ -529,17 +529,17 @@
             label1.TabIndex = 0;
             label1.Text = "Gestion de Productos";
             // 
-            // tabPageMenu
+            // tabPageInicio
             // 
-            tabPageMenu.BackColor = Color.GhostWhite;
-            tabPageMenu.Controls.Add(label6);
-            tabPageMenu.Controls.Add(lblLogo);
-            tabPageMenu.Location = new Point(4, 34);
-            tabPageMenu.Name = "tabPageMenu";
-            tabPageMenu.Padding = new Padding(3);
-            tabPageMenu.Size = new Size(1475, 756);
-            tabPageMenu.TabIndex = 0;
-            tabPageMenu.Text = "Menu";
+            tabPageInicio.BackColor = Color.GhostWhite;
+            tabPageInicio.Controls.Add(label6);
+            tabPageInicio.Controls.Add(lblLogo);
+            tabPageInicio.Location = new Point(4, 34);
+            tabPageInicio.Name = "tabPageInicio";
+            tabPageInicio.Padding = new Padding(3);
+            tabPageInicio.Size = new Size(1475, 756);
+            tabPageInicio.TabIndex = 0;
+            tabPageInicio.Text = "Inicio";
             // 
             // label6
             // 
@@ -564,7 +564,7 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPageMenu);
+            tabControl1.Controls.Add(tabPageInicio);
             tabControl1.Controls.Add(tabPageProductos);
             tabControl1.Controls.Add(tabPageCategorias);
             tabControl1.Controls.Add(tabPageProveedores);
@@ -706,7 +706,7 @@
             label12.TabIndex = 18;
             label12.Text = "Consultas y Reportes";
             // 
-            // FormMenu
+            // FormPrincipal
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -715,7 +715,7 @@
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "FormMenu";
+            Name = "FormPrincipal";
             Text = "Vault";
             tabPageProveedores.ResumeLayout(false);
             tabPageProveedores.PerformLayout();
@@ -726,8 +726,8 @@
             tabPageProductos.ResumeLayout(false);
             tabPageProductos.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).EndInit();
-            tabPageMenu.ResumeLayout(false);
-            tabPageMenu.PerformLayout();
+            tabPageInicio.ResumeLayout(false);
+            tabPageInicio.PerformLayout();
             tabControl1.ResumeLayout(false);
             tabPageConsultasReportes.ResumeLayout(false);
             tabPageConsultasReportes.PerformLayout();
@@ -775,7 +775,7 @@
         private Label lblCodDeProducto;
         private Label lblNombre;
         private Label label1;
-        private TabPage tabPageMenu;
+        private TabPage tabPageInicio;
         private TabControl tabControl1;
         private TabPage tabPageConsultasReportes;
         private Label label12;
