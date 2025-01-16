@@ -18,7 +18,7 @@ namespace IDS340___Projecto_Final
             CargarData();
         }
 
-        ///  METODOS PARA CARGAR Y REFRESCAR PRODUCTOS/CATEGORIAS/PROVEEDORES EN LOS CONTROLES "datGridView" & "ComboBox"
+        ///  METODOS PARA CARGAR Y REFRESCAR PRODUCTOS/CATEGORIAS/PROVEEDORES EN LOS CONTROLES "dataGridView" & "ComboBox"
 
         private void CargarData()
         {
@@ -59,13 +59,15 @@ namespace IDS340___Projecto_Final
             cmbProveedorConsulta.ValueMember = "Id";
         }
 
-        /// PRODUCTOS
+        /// GESTION DE PRODUCTOS
 
+        // Método para agregar productos a la base de datos.
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
             string query = "INSERT INTO Productos (Nombre, CodigoProducto, Categoria, Precio, Existencia, Proveedor) " +
                 "           VALUES (@Nombre, @CodigoProducto, @Categoria, @Precio, @Existencia, @Proveedor)";
-            var parameters = new SQLiteParameter[]
+
+            var parameters = new SQLiteParameter[] // Vincular entradas de la base de datos a los controles.
             {
                 new SQLiteParameter("@Nombre", txtNombreProducto.Text),
                 new SQLiteParameter("@CodigoProducto", txtCodigoProducto.Text),
@@ -79,6 +81,7 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Producto agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 CargarProductos();
             }
             catch (Exception ex)
@@ -87,6 +90,7 @@ namespace IDS340___Projecto_Final
             }
         }
 
+        // Método para editar productos a la base de datos.
         private void btnEditarProducto_Click(object sender, EventArgs e)
         {
             // Validación para asegurarse de que se ha seleccionado un producto
@@ -96,7 +100,7 @@ namespace IDS340___Projecto_Final
                 return;
             }
 
-            // Validacion de campos
+            // Validación de campos
             if (string.IsNullOrWhiteSpace(txtNombreProducto.Text) ||
                 string.IsNullOrWhiteSpace(txtCodigoProducto.Text) ||
                 cmbCategoriaProducto.SelectedValue == null ||
@@ -117,7 +121,7 @@ namespace IDS340___Projecto_Final
                          Proveedor = @Proveedor 
                      WHERE Id = @Id";
 
-            var parameters = new SQLiteParameter[]
+            var parameters = new SQLiteParameter[] // Vincular entradas de la base de datos a los controles.
             {
                 new SQLiteParameter("@Nombre", txtNombreProducto.Text),
                 new SQLiteParameter("@CodigoProducto", txtCodigoProducto.Text),
@@ -125,7 +129,7 @@ namespace IDS340___Projecto_Final
                 new SQLiteParameter("@Precio", Convert.ToDouble(txtPrecioProducto.Text)),
                 new SQLiteParameter("@Existencia", Convert.ToInt32(txtExistenciaProducto.Text)),
                 new SQLiteParameter("@Proveedor", cmbProveedorProducto.SelectedValue),
-                new SQLiteParameter("@Id", GetSelectedProductId()) 
+                new SQLiteParameter("@Id", ObtenerIdProducto()) 
             };
 
             try
@@ -140,9 +144,10 @@ namespace IDS340___Projecto_Final
             }
         }
 
+        // Método para eliminar productos en la base de datos.
         private void btnEliminarProducto_Click(object sender, EventArgs e)
         {
-            // Validación para asegurarse de que se ha seleccionado un producto
+            // Validación para asegurarse de que se ha seleccionado un producto.
             if (dataGridViewProductos.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Por favor, selecciona un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -150,12 +155,14 @@ namespace IDS340___Projecto_Final
             }
 
             DialogResult confirmResult = MessageBox.Show("¿Estás seguro de que deseas eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            // Eliminacion del producto elegido de la base de datos.
             if (confirmResult == DialogResult.Yes)
             {
                 string query = "DELETE FROM Productos WHERE Id = @Id";
                 var parameters = new SQLiteParameter[]
                 {
-                    new SQLiteParameter("@Id", GetSelectedProductId())
+                    new SQLiteParameter("@Id", ObtenerIdProducto())
                 };
 
                 try
@@ -170,7 +177,9 @@ namespace IDS340___Projecto_Final
                 }
             }
         }
-        private int GetSelectedProductId()
+
+        //Método para convertir el Id del producto elegido a un valor int.
+        private int ObtenerIdProducto()
         {
             if (dataGridViewProductos.SelectedRows.Count > 0)
             {
@@ -205,8 +214,7 @@ namespace IDS340___Projecto_Final
             }
         }
 
-
-        ///  CATEGORIAS
+        ///  GESTION DE CATEGORIAS
 
         private void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
@@ -293,7 +301,7 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        /// PROVEEDORES
+        /// GESTION DE PROVEEDORES
 
         private void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
