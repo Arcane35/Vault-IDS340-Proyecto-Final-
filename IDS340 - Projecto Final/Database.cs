@@ -2,15 +2,24 @@
 using System.Data;
 using System.Data.SQLite;
 
+/// <summary>
+/// Clase <c>Database</c>: Proporciona los métodos para crear e interactuar con la base de datos SQLite local que utiliza el proyecto..
+/// </summary>
 public class Database
 {
     private readonly string connectionString = "Data Source=database.db;Version=3;";
 
+    /// <summary>
+    /// Constructor de la clase <c>Database</c>: Inicializa la conexión y crea las tablas si no existen.
+    /// </summary>
     public Database()
     {
-       CreateDatabase();
+        CreateDatabase();
     }
 
+    /// <summary>
+    /// Método <c>CreateDatabase</c>: Crea las tablas necesarias en la base de datos si no existen.
+    /// </summary>
     private void CreateDatabase()
     {
         using (var connection = new SQLiteConnection(connectionString))
@@ -48,6 +57,11 @@ public class Database
         }
     }
 
+    /// <summary>
+    /// Método <c>ExecuteQuery</c>: Ejecuta una consulta SELECT en la base de datos.
+    /// </summary>
+    /// <param name="query">La consulta SQL que se ejecutará.</param>
+    /// <returns>Un objeto <c>DataTable</c> que contiene los resultados de la consulta.</returns>
     public DataTable ExecuteQuery(string query, SQLiteParameter[] parameters = null)
     {
         using (var connection = new SQLiteConnection(connectionString))
@@ -68,6 +82,10 @@ public class Database
         }
     }
 
+    /// <summary>
+    /// Método <c>ExecuteNonQuery</c>: Ejecuta una consulta SQL que no devuelve datos, como INSERT, UPDATE o DELETE.
+    /// </summary>
+    /// <param name="query">La consulta SQL que se ejecutará.</param>
     public void ExecuteNonQuery(string query, SQLiteParameter[] parameters = null)
     {
         using (var connection = new SQLiteConnection(connectionString))

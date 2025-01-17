@@ -3,11 +3,13 @@ using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
-namespace IDS340___Projecto_Final
+namespace Vault_IDS340_Proyecto_Final
 {
+    /// <summary>
+    /// Clase <c>FormPrincipal</c>: Contiene todos los métodos y funcionalidades del formulario principal del proyecto.
+    /// </summary>
     public partial class FormPrincipal : Form
     {
-
         private Database database;
 
         public FormPrincipal()
@@ -18,8 +20,9 @@ namespace IDS340___Projecto_Final
             CargarData();
         }
 
-        ///  METODOS PARA CARGAR Y REFRESCAR PRODUCTOS/CATEGORIAS/PROVEEDORES EN LOS CONTROLES "dataGridView" & "ComboBox"
-
+        /// <summary>
+        /// Método <c>CargarData</c>: Carga los datos iniciales de las tablas Productos, Categorías y Proveedores al inicar el programa.
+        /// </summary>
         private void CargarData()
         {
             CargarProductos();
@@ -27,6 +30,9 @@ namespace IDS340___Projecto_Final
             CargarProveedores();
         }
 
+        /// <summary>
+        /// Método <c>CargarProductos</c>: Carga los datos de la tabla Productos y actualiza los controles correspondientes.
+        /// </summary>
         private void CargarProductos()
         {
             string query = "SELECT * FROM Productos";
@@ -34,7 +40,9 @@ namespace IDS340___Projecto_Final
             dataGridViewConsultas.DataSource = database.ExecuteQuery(query);
         }
 
-
+        /// <summary>
+        /// Método <c>CargarCategorias</c>: Carga los datos de la tabla Categorías y actualiza los controles correspondientes.
+        /// </summary>
         private void CargarCategorias()
         {
             string query = "SELECT * FROM Categorias";
@@ -47,6 +55,9 @@ namespace IDS340___Projecto_Final
             cmbCategoriaConsulta.ValueMember = "Id";
         }
 
+        /// <summary>
+        /// Método <c>CargarProveedores</c>: Carga los datos de la tabla Proveedores y actualiza los controles correspondientes.
+        /// </summary>
         private void CargarProveedores()
         {
             string query = "SELECT * FROM Proveedores";
@@ -61,13 +72,15 @@ namespace IDS340___Projecto_Final
 
         /// GESTION DE PRODUCTOS
 
-        // Método para agregar productos a la base de datos.
+        /// <summary>
+        /// Método <c>btnAgregarProducto_Click</c>: Agrega un nuevo producto a la base de datos.
+        /// </summary>
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
             string query = "INSERT INTO Productos (Nombre, CodigoProducto, Categoria, Precio, Existencia, Proveedor) " +
-                "           VALUES (@Nombre, @CodigoProducto, @Categoria, @Precio, @Existencia, @Proveedor)";
+                           "VALUES (@Nombre, @CodigoProducto, @Categoria, @Precio, @Existencia, @Proveedor)";
 
-            var parameters = new SQLiteParameter[] // Vincular entradas de la base de datos a los controles.
+            var parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Nombre", txtNombreProducto.Text),
                 new SQLiteParameter("@CodigoProducto", txtCodigoProducto.Text),
@@ -81,7 +94,6 @@ namespace IDS340___Projecto_Final
             {
                 database.ExecuteNonQuery(query, parameters);
                 MessageBox.Show("Producto agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 CargarProductos();
             }
             catch (Exception ex)
@@ -90,17 +102,17 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para editar productos a la base de datos.
+        /// <summary>
+        /// Método <c>btnEditarProducto_Click</c>: Edita un producto existente en la base de datos.
+        /// </summary>
         private void btnEditarProducto_Click(object sender, EventArgs e)
         {
-            // Validación para asegurarse de que se ha seleccionado un producto
             if (dataGridViewProductos.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Por favor, selecciona un producto para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validación de campos
             if (string.IsNullOrWhiteSpace(txtNombreProducto.Text) ||
                 string.IsNullOrWhiteSpace(txtCodigoProducto.Text) ||
                 cmbCategoriaProducto.SelectedValue == null ||
@@ -121,7 +133,7 @@ namespace IDS340___Projecto_Final
                          Proveedor = @Proveedor 
                      WHERE Id = @Id";
 
-            var parameters = new SQLiteParameter[] // Vincular entradas de la base de datos a los controles.
+            var parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Nombre", txtNombreProducto.Text),
                 new SQLiteParameter("@CodigoProducto", txtCodigoProducto.Text),
@@ -129,7 +141,7 @@ namespace IDS340___Projecto_Final
                 new SQLiteParameter("@Precio", Convert.ToDouble(txtPrecioProducto.Text)),
                 new SQLiteParameter("@Existencia", Convert.ToInt32(txtExistenciaProducto.Text)),
                 new SQLiteParameter("@Proveedor", cmbProveedorProducto.SelectedValue),
-                new SQLiteParameter("@Id", ObtenerIdProducto()) 
+                new SQLiteParameter("@Id", ObtenerIdProducto())
             };
 
             try
@@ -144,10 +156,11 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para eliminar productos en la base de datos.
+        /// <summary>
+        /// Método <c>btnEliminarProducto_Click</c>: Elimina un producto seleccionado de la base de datos.
+        /// </summary>
         private void btnEliminarProducto_Click(object sender, EventArgs e)
         {
-            // Validación para asegurarse de que se ha seleccionado un producto.
             if (dataGridViewProductos.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Por favor, selecciona un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -155,8 +168,7 @@ namespace IDS340___Projecto_Final
             }
 
             DialogResult confirmResult = MessageBox.Show("¿Estás seguro de que deseas eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            
-            // Eliminacion del producto elegido de la base de datos.
+
             if (confirmResult == DialogResult.Yes)
             {
                 string query = "DELETE FROM Productos WHERE Id = @Id";
@@ -169,7 +181,7 @@ namespace IDS340___Projecto_Final
                 {
                     database.ExecuteNonQuery(query, parameters);
                     MessageBox.Show("Producto eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarProductos(); 
+                    CargarProductos();
                 }
                 catch (Exception ex)
                 {
@@ -178,7 +190,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        //Método para convertir el Id del producto elegido a un valor int.
+        /// <summary>
+        /// Método <c>ObtenerIdProducto</c>: Obtiene el ID del producto seleccionado en el DataGridView.
+        /// </summary>
         private int ObtenerIdProducto()
         {
             if (dataGridViewProductos.SelectedRows.Count > 0)
@@ -191,7 +205,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para manejar el cambio de selección en el DataGridView
+        /// <summary>
+        /// Método <c>dataGridViewProductos_SelectionChanged</c>: Maneja el evento de cambio de selección en el DataGridView de productos, rellenando los controles con los datos seleccionados.
+        /// </summary>
         private void dataGridViewProductos_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridViewProductos.SelectedRows.Count > 0)
@@ -216,6 +232,9 @@ namespace IDS340___Projecto_Final
 
         ///  GESTION DE CATEGORIAS
 
+        /// <summary>
+        /// Método <c>btnAgregarCategoria_Click</c>: Agrega una nueva categoria a la base de datos.
+        /// </summary>
         private void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
             string query = "INSERT INTO Categorias (Nombre, Descripcion) " +
@@ -239,6 +258,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
+        /// <summary>
+        /// Método <c>btnEditarCategoria_Click</c>: Edita una categoria existente en la base de datos.
+        /// </summary>
         private void btnEditarCategoria_Click(object sender, EventArgs e)
         {
             string query = @"UPDATE Categorias 
@@ -250,27 +272,35 @@ namespace IDS340___Projecto_Final
             {
                 new SQLiteParameter("@Nombre", txtNombreCategoria.Text),
                 new SQLiteParameter("@Descripcion", txtDescripcionCategoria.Text),
-                new SQLiteParameter("@Id", GetSelectedCategoryId())
+                new SQLiteParameter("@Id", ObtenerIdCategorias())
             };
 
             database.ExecuteNonQuery(query, parameters);
+
             CargarCategorias();
         }
 
+        /// <summary>
+        /// Método <c>btnEliminarCategoria_Click</c>: Elimina una categoria seleccionada de la base de datos.
+        /// </summary>
         private void btnEliminarCategoria_Click(object sender, EventArgs e)
         {
             string query = "DELETE FROM Categorias WHERE Id = @Id";
 
             var parameters = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Id", GetSelectedCategoryId())
+                new SQLiteParameter("@Id", ObtenerIdCategorias())
             };
 
             database.ExecuteNonQuery(query, parameters);
+
             CargarCategorias();
         }
 
-        private int GetSelectedCategoryId()
+        /// <summary>
+        /// Método <c>ObtenerIdCategorias</c>: Obtiene el ID de la categoria seleccionada en el DataGridView.
+        /// </summary>
+        private int ObtenerIdCategorias()
         {
             if (dataGridViewCategoria.SelectedRows.Count > 0)
             {
@@ -282,7 +312,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para manejar el cambio de selección en el DataGridView
+        /// <summary>
+        /// Método <c>dataGridViewCategoria_SelectionChanged</c>: Maneja el evento de cambio de selección en el DataGridView de categorias, rellenando los controles con los datos seleccionados.
+        /// </summary>
         private void dataGridViewCategoria_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridViewCategoria.SelectedRows.Count > 0)
@@ -303,6 +335,9 @@ namespace IDS340___Projecto_Final
 
         /// GESTION DE PROVEEDORES
 
+        /// <summary>
+        /// Método <c>btnAgregarProveedor_Click</c>: Agrega un nuevo proveedor a la base de datos.
+        /// </summary>
         private void btnAgregarProveedor_Click(object sender, EventArgs e)
         {
             string query = "INSERT INTO Proveedores (NombreEmpresa, Contacto, Direccion, Telefono) " +
@@ -328,6 +363,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
+        /// <summary>
+        /// Método <c>btnEditarProveedor_Click</c>: Edita un proveedor existente en la base de datos.
+        /// </summary>
         private void btnEditarProveedor_Click(object sender, EventArgs e)
         {
             string query = @"UPDATE Proveedores 
@@ -343,27 +381,33 @@ namespace IDS340___Projecto_Final
                 new SQLiteParameter("@Contacto", txtContactoProveedor.Text),
                 new SQLiteParameter("@Direccion", txtDireccionProveedor.Text),
                 new SQLiteParameter("@Telefono", txtTelefonoProveedor.Text),
-                new SQLiteParameter("@Id", GetSelectedSupplierId())
+                new SQLiteParameter("@Id", ObtenerIdProveedores())
             };
 
             database.ExecuteNonQuery(query, parameters);
             CargarProveedores();
         }
 
+        /// <summary>
+        /// Método <c>btnEliminarProveedor_Click</c>: Elimina un proveedor seleccionado de la base de datos.
+        /// </summary>
         private void btnEliminarProveedor_Click(object sender, EventArgs e)
         {
             string query = "DELETE FROM Proveedores WHERE Id = @Id";
 
             var parameters = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Id", GetSelectedSupplierId())
+                new SQLiteParameter("@Id", ObtenerIdProveedores())
             };
 
             database.ExecuteNonQuery(query, parameters);
             CargarProveedores();
         }
 
-        private int GetSelectedSupplierId()
+        /// <summary>
+        /// Método <c>ObtenerIdProveedoress</c>: Obtiene el ID del proveedor seleccionado en el DataGridView.
+        /// </summary>
+        private int ObtenerIdProveedores()
         {
             if (dataGridViewProveedor.SelectedRows.Count > 0)
             {
@@ -375,7 +419,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para manejar el cambio de selección en el DataGridView
+        /// <summary>
+        /// Método <c>dataGridViewProveedor_SelectionChanged</c>: Maneja el evento de cambio de selección en el DataGridView de proveedores, rellenando los controles con los datos seleccionados.
+        /// </summary>
         private void dataGridViewProveedor_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridViewProveedor.SelectedRows.Count > 0)
@@ -388,7 +434,7 @@ namespace IDS340___Projecto_Final
                     txtContactoProveedor.Text = selectedRow.Cells["Contacto"].Value?.ToString();
                     txtDireccionProveedor.Text = selectedRow.Cells["Direccion"].Value?.ToString();
                     txtTelefonoProveedor.Text = selectedRow.Cells["Telefono"].Value?.ToString();
-                    new SQLiteParameter("@Id", GetSelectedSupplierId());
+                    new SQLiteParameter("@Id", ObtenerIdProveedores());
                 }
                 catch (Exception ex)
                 {
@@ -397,9 +443,11 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        /// CONSULTAS & REPORTES
+        /// CONSULTAS Y REPORTES
 
-        // Metodo para filtrar productos segun categoria y proveedor elegido.
+        /// <summary>
+        /// Método <c>btnConsultar_Click</c>: Filtra los productos en la base de datos según categoría y proveedor seleccionados.
+        /// </summary>
         private void btnConsultar_Click(object sender, EventArgs e)
         {
             try
@@ -442,7 +490,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para mostrar productos con stock bajo.
+        /// <summary>
+        /// Método <c>btnMostrarStockBajo_Click</c>: Muestra los productos con existencias por debajo de un nivel establecido (menos de 10).
+        /// </summary>
         private void btnMostrarStockBajo_Click(object sender, EventArgs e)
         {
             try
@@ -466,7 +516,9 @@ namespace IDS340___Projecto_Final
             }
         }
 
-        // Método para generar reporte de productos con stock bajo en .csv
+        /// <summary>
+        /// Método <c>btnGenerarReporte_Click</c>: Genera un archivo .CSV con los productos que tienen existencias bajas.
+        /// </summary>
         private void btnGenerarReporte_Click(object sender, EventArgs e)
         {
             try
@@ -479,7 +531,7 @@ namespace IDS340___Projecto_Final
                     
                     dataGridViewConsultas.DataSource = productosConStockBajo;
 
-                    string reportePath = "ReporteStockBajo.csv";
+                    string reportePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReporteStockBajo.csv"); // Genera el archivo .csv en la carpeta "Documents" del usuario.
                     using (StreamWriter writer = new StreamWriter(reportePath))
                     {
                         writer.WriteLine("Id,Nombre,CodigoProducto,Categoria,Precio,Existencia,Proveedor");
