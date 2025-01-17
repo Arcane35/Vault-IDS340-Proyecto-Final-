@@ -1,8 +1,10 @@
+## Detalles de Asignación
+
 *Jean Michel Boucher García (cod. 1101604)*
 
 Este repositorio corresponde al proyecto final de las materias **IDS340 e IDS340L (Desarrollo de Software I)** impartidas en el Instituto Tecnológico de Santo Domingo (**INTEC**), por el profesor **Lorenzo Antonio Martínez Lebrón**.
 
-# Información General
+## Información General
 
 **Vault** es un programa de administración de inventario, hecho en Windows Forms, el cual utiliza el paquete SQLite para crear una base de datos localmente adentro del folder del proyecto (llamado *Database.db*). Contiene cuatro módulos (divididas en pestañas diferentes), las cuales le permiten al usuario realizar las siguientes funciones:
 -	**Gestion de Productos:** Esta pestaña visualiza todos los Productos que estan actualmente guardadas adentro del inventario. Permite agregar, editar o eliminar cualquier producto que esta adentro del inventario actualmente.
@@ -22,6 +24,14 @@ El archivo *Database.cs* contiene los metodos que permiten la comunacion de los 
 El codigo contenido en ambos archivos esta documentado con comentarios que detallan el funcionamiento de los metodos que tienen.
 
 Este programa viene con entradas pre-ingresadas adentro de la base de datos, para mejor demostrar sus funciones. Todas pueden ser modificadas si el usuario desea (ya sea por este mismo programa o mediante DB Browser).
+
+## Instalación y Uso
+
+1. Clonar el repositorio (Hacer Click en el boton *Code* en esta pagina, y elegir descargar .ZIP).
+2. Extraer, luego ir al directorio del proyecto.
+3. Con su IDE de preferencia, abrir la solución del proyecto (el archivo *Vault (IDS340 Proyecto Final).sln*)
+4. Una vez abierto en el IDE, compilar con el botón de Debug para correr el programa.
+
 
 
 
