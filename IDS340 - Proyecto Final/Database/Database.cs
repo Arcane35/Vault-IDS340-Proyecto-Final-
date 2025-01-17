@@ -1,19 +1,33 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 
 /// <summary>
-/// Clase <c>Database</c>: Proporciona los métodos para crear e interactuar con la base de datos SQLite local que utiliza el proyecto..
+/// Clase <c>Database</c>: Proporciona los métodos para crear e interactuar con la base de datos SQLite local que utiliza el proyecto.
 /// </summary>
 public class Database
 {
-    private readonly string connectionString = "Data Source=database.db;Version=3;";
+    private readonly string connectionString;
 
     /// <summary>
     /// Constructor de la clase <c>Database</c>: Inicializa la conexión y crea las tablas si no existen.
     /// </summary>
     public Database()
     {
+        // Cambia la ruta del directorio donde esta localizado el archivo .db, para que no sea dentro de la carpeta Debug.
+        string projectDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Database");
+
+        // Crea la carpeta Database si no existe
+        if (!Directory.Exists(projectDirectory))
+        {
+            Directory.CreateDirectory(projectDirectory);
+        }
+
+        // Establecer la ruta de la base de datos
+        string databasePath = Path.Combine(projectDirectory, "database.db");
+        connectionString = $"Data Source={databasePath};Version=3;";
+
         CreateDatabase();
     }
 
