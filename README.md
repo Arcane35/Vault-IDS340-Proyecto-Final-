@@ -12,9 +12,11 @@ Este repositorio corresponde al proyecto final de las materias **IDS340 e IDS340
 -	**Gestion de Proveedores:** Esta pestaña visualiza todos las Proveedores que estan actualmente guardadas adentro de la base de datos. Permite agregar, editar o eliminar proveedores.
 -	**Consultas y Reportes:** Esta pestaña visualiza nuevamente todos los Productos del inventario. El usuario podrá filtrar los Productos por Categoría y Proveedor, además de también poder ver cuales Productos adentro del inventario tienen baja disponibilidad.
 
+## Funcionalidades Adicionales
+
 Además de las funcionalidades básicas de agregar, editar y eliminar productos, categorías o proveedores, Vault también contiene funcionalidades adicionales para mejorar la experiencia de administración para el usuario:
 
--	**Message Boxes de Advertencia:** Todos los controles del programa le dan un aviso al usuario en caso de que su accion haya sido exitosa o no.
+-	**Message Boxes de Advertencia:** La mayoria de los controles del programa le dan un aviso al usuario en caso de que su accion haya sido exitosa o no.
 -	**Auto relleno de Seleccion:** Hacer click a un elemento adentro de la base de datos hace que se auto-rellene las cajas de texto con todos los detalles del elemento seleccionado. Esto permite una edición o eliminacion de entradas mas eficientemente (ya que remueve la necesidad de tener que escribir todos los detalles de dicha entrada antes e poder editarla o eliminarla).
 -	**Generación de Reporte en .CSV:** Adentro de la pestaña de Consultas y Reportes existe un botón que permite generar un reporte de los Productos que actualmente tienen baja disponibilidad. Este reporte se generará en la carpeta “Documents” del usuario.
 
