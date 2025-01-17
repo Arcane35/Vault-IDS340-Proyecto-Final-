@@ -32,6 +32,7 @@ Este programa viene con entradas pre-ingresadas adentro de la base de datos, par
 3. Con su IDE de preferencia, abrir la solución del proyecto (el archivo *Vault (IDS340 Proyecto Final).sln*)
 4. Una vez abierto en el IDE, compilar con el botón de Debug para correr el programa.
 
+Altenativamente, elegir la opción de *Abrir en Visual Studio*, y la IDE automaticamente le preguntara en donde quiere guardar el repositorio del proyecto.
 
 
 
