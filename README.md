@@ -2,6 +2,8 @@
 
 Este repositorio corresponde al proyecto final de las materias **IDS340 e IDS340L (Desarrollo de Software I)** impartidas en el Instituto Tecnológico de Santo Domingo (**INTEC**), por el profesor **Lorenzo Antonio Martínez Lebrón**.
 
+# Información General
+
 **Vault** es un programa de administración de inventario, hecho en Windows Forms, el cual utiliza el paquete SQLite para crear una base de datos localmente adentro del folder del proyecto (llamado *Database.db*). Contiene cuatro módulos (divididas en pestañas diferentes), las cuales le permiten al usuario realizar las siguientes funciones:
 -	**Gestion de Productos:** Esta pestaña visualiza todos los Productos que estan actualmente guardadas adentro del inventario. Permite agregar, editar o eliminar cualquier producto que esta adentro del inventario actualmente.
 -	**Gestion de Categorías:** Esta pestaña visualiza todas las Categorías que estan actualmente guardadas adentro de la base de datos. Permite agregar, editar o eliminar categorías.
